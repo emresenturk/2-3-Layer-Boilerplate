@@ -1,0 +1,18 @@
+meta {
+  name: Update ToDo
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:5248/todos
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 1,
+    "text": "Last thing to do..."
+  }
+}

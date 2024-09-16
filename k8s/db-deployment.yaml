@@ -1,0 +1,34 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: todoapp-db
+  namespace: todoapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: todoapp-db
+  template:
+    metadata:
+      labels:
+        component: todoapp-db
+    spec:
+      volumes:
+        - name: todoapp-db-persistent-storage
+          persistentVolumeClaim:
+            claimName: todoapp-db-persistent-volume-claim
+      containers:
+        - name: todoapp-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres-secret
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: todoapp-db-vol
+      volumes:
+        - name: todoapp-db-vol
+          persistentVolumeClaim:
+            claimName: todoapp-db-persistent-volume-claim

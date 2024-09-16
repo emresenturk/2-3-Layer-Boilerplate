@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todoapp-api-deployment
+  namespace: todoapp
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      component: todoapp
+  template:
+    metadata:
+      labels:
+        component: todoapp
+    spec:
+      containers:
+        - name: todoapp-api
+          image: m3sh/todo-app-api
+          env:
+            - name: ConnectionStrings__Default
+              valueFrom:
+                secretKeyRef:
+                  name: connection-string
+                  key: ConnectionString

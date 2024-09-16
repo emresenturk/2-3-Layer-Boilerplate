@@ -1,0 +1,17 @@
+meta {
+  name: Create ToDo
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5248/todos
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "text": "First thing to do..."
+  }
+}
