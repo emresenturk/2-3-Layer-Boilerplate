@@ -12,5 +12,5 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    run: postgres
+    component: todoapp-db
   type: NodePort
