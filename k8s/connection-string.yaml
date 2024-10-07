@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: connection-string
+  namespace: todoapp
+type: Opaque
+data:
+  ConnectionString: SG9zdD10b2RvYXBwLWRiLWNsdXN0ZXJpcC1zZXJ2aWNlLnRvZG9hcHA6NTQzMjtEYXRhYmFzZT10b2RvZGI7VXNlcm5hbWU9cG9zdGdyZXM7UGFzc3dvcmQ9UGFzc3dvcmRAMTIzOw==

@@ -4,7 +4,7 @@ metadata:
   name: todoapp-db-persistent-volume-claim
   namespace: todoapp
 spec:
-  storageClassName: manual
+  storageClassName: standard
   accessModes:
     - ReadWriteMany
   resources:
