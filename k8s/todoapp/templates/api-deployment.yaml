@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "todoapp.fullname" . }}-todoapp-api-deployment
+  labels:
+  {{- include "todoapp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.todoappApiDeployment.replicas }}
+  selector:
+    matchLabels:
+      component: todoapp
+    {{- include "todoapp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        component: todoapp
+      {{- include "todoapp.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: ConnectionStrings__Default
+          valueFrom:
+            secretKeyRef:
+              key: ConnectionString
+              name: {{ include "todoapp.fullname" . }}-connection-string
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.todoappApiDeployment.todoappApi.image.repository }}:{{ .Values.todoappApiDeployment.todoappApi.image.tag
+          | default .Chart.AppVersion }}
+        name: todoapp-api
+        resources: {}

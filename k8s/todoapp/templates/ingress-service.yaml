@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "todoapp.fullname" . }}-todoapp-ingress
+  labels:
+  {{- include "todoapp.labels" . | nindent 4 }}
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: todoapp
+    http:
+      paths:
+      - backend:
+          service:
+            name: '{{ include "todoapp.fullname" . }}-api-expose-service'
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix

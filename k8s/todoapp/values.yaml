@@ -1,0 +1,42 @@
+apiExposeService:
+  ports:
+  - nodePort: 31234
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  type: NodePort
+connectionString:
+  connectionString: "Host=todoapp-todoapp-db-clusterip-service.todoapp:5432;Database=tododb;Username=postgres;Password=Password@123;"
+dbExposeService:
+  ports:
+  - nodePort: 30000
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  type: NodePort
+kubernetesClusterDomain: cluster.local
+postgresSecret:
+  postgresPassword: "postgres"
+  postgresUser: "Password@123"
+pvc:
+  todoappDbPersistentVolumeClaim:
+    storageClass: standard
+    storageRequest: 5Gi
+todoappApiDeployment:
+  replicas: 1
+  todoappApi:
+    image:
+      repository: m3sh/todo-app-api
+      tag: latest
+todoappDb:
+  replicas: 1
+  todoappDb:
+    image:
+      repository: postgres
+      tag: 16
+todoappDbClusteripService:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  type: ClusterIP

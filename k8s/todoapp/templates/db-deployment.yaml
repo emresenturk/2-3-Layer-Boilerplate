@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "todoapp.fullname" . }}-todoapp-db
+  labels:
+  {{- include "todoapp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.todoappDb.replicas }}
+  selector:
+    matchLabels:
+      component: todoapp-db
+    {{- include "todoapp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        component: todoapp-db
+      {{- include "todoapp.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - secretRef:
+            name: {{ include "todoapp.fullname" . }}-postgres-secret
+        image: {{ .Values.todoappDb.todoappDb.image.repository }}:{{ .Values.todoappDb.todoappDb.image.tag
+          | default .Chart.AppVersion }}
+        name: todoapp-db
+        ports:
+        - containerPort: 5432
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: todoapp-db-vol
+      volumes:
+      - name: todoapp-db-vol
+        persistentVolumeClaim:
+          claimName: {{ include "todoapp.fullname" . }}-todoapp-db-persistent-volume-claim

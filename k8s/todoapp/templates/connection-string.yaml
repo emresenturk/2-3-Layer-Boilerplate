@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "todoapp.fullname" . }}-connection-string
+  labels:
+  {{- include "todoapp.labels" . | nindent 4 }}
+data:
+  ConnectionString: {{ required "connectionString.connectionString is required" .Values.connectionString.connectionString
+    | b64enc | quote }}
+type: Opaque

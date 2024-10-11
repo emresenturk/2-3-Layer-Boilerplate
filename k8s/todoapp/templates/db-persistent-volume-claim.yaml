@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "todoapp.fullname" . }}-todoapp-db-persistent-volume-claim
+  labels:
+  {{- include "todoapp.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.todoappDbPersistentVolumeClaim.storageRequest | quote
+        }}
+  storageClassName: {{ .Values.pvc.todoappDbPersistentVolumeClaim.storageClass |
+    quote }}
