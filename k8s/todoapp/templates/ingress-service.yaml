@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "todoapp.fullname" . }}-todoapp-ingress
+  name: {{ include "todoapp.fullname" . }}-ingress
   labels:
   {{- include "todoapp.labels" . | nindent 4 }}
 spec:

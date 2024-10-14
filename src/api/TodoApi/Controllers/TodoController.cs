@@ -1,5 +1,7 @@
+using System.Diagnostics.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Todo;
 using Todo.Models;
 
 namespace TodoApi.Controllers;
@@ -9,10 +11,18 @@ namespace TodoApi.Controllers;
 public class TodoController : ControllerBase
 {
     private readonly TodoDbContext ctx;
+    private readonly MachineIdService machineIdService;
 
-    public TodoController(TodoDbContext ctx)
+    public TodoController(TodoDbContext ctx, MachineIdService machineIdService)
     {
         this.ctx = ctx;
+        this.machineIdService = machineIdService;
+    }
+
+    [HttpGet("machine-id")]
+    public async Task<string> GetMachineId()
+    {
+        return machineIdService.MachineId.ToString();
     }
 
     [HttpGet("")]

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ include "todoapp.fullname" . }}-todoapp-db-storage
+  name: {{ include "todoapp.fullname" . }}-db-storage
   labels:
   {{- include "todoapp.labels" . | nindent 4 }}
 spec:

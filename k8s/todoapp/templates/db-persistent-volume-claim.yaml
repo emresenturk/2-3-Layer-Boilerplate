@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "todoapp.fullname" . }}-todoapp-db-persistent-volume-claim
+  name: {{ include "todoapp.fullname" . }}-db-persistent-volume-claim
   labels:
   {{- include "todoapp.labels" . | nindent 4 }}
 spec:

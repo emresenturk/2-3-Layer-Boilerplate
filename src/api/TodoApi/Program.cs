@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Todo;
 using Todo.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ builder.Services.AddDbContext<TodoDbContext>(opts => opts.UseNpgsql(builder.Conf
 
 var  myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(opts => opts.AddPolicy(name: myAllowSpecificOrigins, policy => {policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();}));
+builder.Services.AddSingleton<MachineIdService>();
 // Add services to the container.
 
 builder.Services.AddControllers();

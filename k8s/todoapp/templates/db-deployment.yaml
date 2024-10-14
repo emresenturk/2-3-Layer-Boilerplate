@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "todoapp.fullname" . }}-todoapp-db
+  name: {{ include "todoapp.fullname" . }}-db
   labels:
   {{- include "todoapp.labels" . | nindent 4 }}
 spec:
@@ -35,4 +35,4 @@ spec:
       volumes:
       - name: todoapp-db-vol
         persistentVolumeClaim:
-          claimName: {{ include "todoapp.fullname" . }}-todoapp-db-persistent-volume-claim
+          claimName: {{ include "todoapp.fullname" . }}-db-persistent-volume-claim
